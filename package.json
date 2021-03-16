@@ -1,0 +1,15 @@
+{
+  "name": "contact-keeper-app",
+  "version": "1.0.0",
+  "description": "Contact manager app",
+  "license": "ISC",
+  "scripts": {
+    "server": "cd server && yarn server",
+    "client": "cd client && yarn start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "eslint": "cd client && yarn eslint"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0"
+  }
+}
