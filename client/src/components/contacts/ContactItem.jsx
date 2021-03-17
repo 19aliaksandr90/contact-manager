@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import capitalize from 'lodash/capitalize';
 import PropTypes from 'prop-types';
 
+import ContactContext from '../../context/contacts/contactContext';
+
 const ContactItem = ({ contact }) => {
+  const contactContext = useContext(ContactContext);
+  const { deleteContact } = contactContext;
+
   const { id, name, email, phone, type } = contact;
 
+  const onDelete = () => {
+    deleteContact(id);
+  };
+
   return (
-    <div className="card bg-light">
+    <div key={id} className="card bg-light">
       <h3 className="text-primary text-left">
         {name}{' '}
         <span className={`badge ${type === 'professional' ? 'badge-success' : 'badge-primary'}`}>
@@ -31,7 +40,7 @@ const ContactItem = ({ contact }) => {
         <button type="button" className="btn btn-dark btn-sm">
           Edit
         </button>
-        <button type="button" className="btn btn-danger btn-sm">
+        <button type="button" className="btn btn-danger btn-sm" onClick={onDelete}>
           Delete
         </button>
       </p>

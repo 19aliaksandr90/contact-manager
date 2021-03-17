@@ -12,7 +12,7 @@ const Contacts = () => {
   return (
     <>
       {map(contacts, (contact) => (
-        <ContactItem contact={contact} />
+        <ContactItem key={contact.id} contact={contact} />
       ))}
     </>
   );
