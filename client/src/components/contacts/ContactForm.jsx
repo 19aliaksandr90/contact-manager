@@ -4,9 +4,7 @@ import { v4 as uuid } from 'uuid';
 import ContactContext from '../../context/contacts/contactContext';
 
 const ContactForm = () => {
-  const contactContext = useContext(ContactContext);
-
-  const { addContact, clearCurrent, updateContact, current } = contactContext;
+  const { addContact, clearCurrent, updateContact, current } = useContext(ContactContext);
 
   const [contact, setContact] = useState({
     name: '',
