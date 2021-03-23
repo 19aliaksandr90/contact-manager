@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import capitalize from 'lodash/capitalize';
 import PropTypes from 'prop-types';
 
@@ -6,13 +6,16 @@ import ContactContext from '../../context/contacts/contactContext';
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
-  const { deleteContact } = contactContext;
+  const { deleteContact, setCurrent, clearCurrent } = contactContext;
 
   const { id, name, email, phone, type } = contact;
 
   const onDelete = () => {
     deleteContact(id);
+    clearCurrent();
   };
+
+  const handleSetCurrent = useCallback(() => setCurrent(contact), [contact, setCurrent]);
 
   return (
     <div key={id} className="card bg-light">
@@ -37,7 +40,7 @@ const ContactItem = ({ contact }) => {
         )}
       </ul>
       <p>
-        <button type="button" className="btn btn-dark btn-sm">
+        <button type="button" className="btn btn-dark btn-sm" onClick={handleSetCurrent}>
           Edit
         </button>
         <button type="button" className="btn btn-danger btn-sm" onClick={onDelete}>
