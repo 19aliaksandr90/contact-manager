@@ -1,9 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = () => {
   const { setAlert } = useContext(AlertContext);
+  const { error, isAuthenticated, register, clearErrors } = useContext(AuthContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+    }
+    if (error === 'User already exist') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+  }, [clearErrors, error, history, isAuthenticated, setAlert]);
+
   const [user, setUser] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const { name, email, password, confirmPassword } = user;
 
@@ -16,7 +31,11 @@ const Register = () => {
     } else if (password !== confirmPassword) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('Register submit');
+      register({
+        name,
+        email,
+        password,
+      });
     }
   };
 

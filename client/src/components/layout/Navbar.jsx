@@ -1,29 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ title, icon }) => (
-  <div className="navbar bg-primary">
-    <div>
-      <i className={icon} />
-      {title}
-    </div>
-    <ul>
+import AuthContext from '../../context/auth/authContext';
+
+const Navbar = ({ title, icon }) => {
+  const { isAuthenticated, logout, user } = useContext(AuthContext);
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <>
+      <li>Hello {user && user.name}</li>
       <li>
-        <Link to="/">Home</Link>
+        <div className="padding-1rem" role="button" onClick={onLogout}>
+          <i className="fas fa-sign-out-alt" />
+          <span className="hide-sm">Logout</span>
+        </div>
       </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
+    </>
+  );
+
+  const guestLinks = (
+    <>
       <li>
         <Link to="/register">Register</Link>
       </li>
       <li>
         <Link to="/login">Login</Link>
       </li>
-    </ul>
-  </div>
-);
+    </>
+  );
+
+  return (
+    <div className="navbar bg-primary">
+      <div>
+        <i className={icon} />
+        {title}
+      </div>
+      {/* <ul>{isAuthenticated ? <AuthLinks /> : <GuestLinks />}</ul> */}
+      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+    </div>
+  );
+};
 
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
