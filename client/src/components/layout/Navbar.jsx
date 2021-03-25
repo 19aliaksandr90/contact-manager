@@ -1,24 +1,31 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import AuthContext from '../../context/auth/authContext';
+import ContactContext from '../../context/contacts/contactContext';
 
-const Navbar = ({ title, icon }) => {
+const Navbar = (props) => {
+  const { title, icon } = props;
   const { isAuthenticated, logout, user } = useContext(AuthContext);
+  const { clearContacts } = useContext(ContactContext);
+
+  const history = useHistory();
 
   const onLogout = () => {
     logout();
+    history.push('/login');
+    clearContacts();
   };
 
   const authLinks = (
     <>
       <li>Hello {user && user.name}</li>
       <li>
-        <div className="padding-1rem" role="button" onClick={onLogout}>
+        <a href="#!" onClick={onLogout}>
           <i className="fas fa-sign-out-alt" />
           <span className="hide-sm">Logout</span>
-        </div>
+        </a>
       </li>
     </>
   );
@@ -40,7 +47,6 @@ const Navbar = ({ title, icon }) => {
         <i className={icon} />
         {title}
       </div>
-      {/* <ul>{isAuthenticated ? <AuthLinks /> : <GuestLinks />}</ul> */}
       <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
     </div>
   );

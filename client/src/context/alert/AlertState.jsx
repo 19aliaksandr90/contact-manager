@@ -18,8 +18,6 @@ const AlertState = ({ children }) => {
     setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
   };
 
-  // Remove Alert
-
   return (
     <AlertContext.Provider
       value={{

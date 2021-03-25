@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { v4 as uuid } from 'uuid';
 
 import ContactContext from '../../context/contacts/contactContext';
 
@@ -34,7 +33,7 @@ const ContactForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!current) {
-      addContact({ ...contact, id: uuid() });
+      addContact({ ...contact });
     } else {
       updateContact(contact);
     }

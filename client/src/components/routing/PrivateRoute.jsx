@@ -4,21 +4,20 @@ import PropTypes from 'prop-types';
 
 import AuthContext from '../../context/auth/authContext';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ children, path, ...rest }) => {
   const { isAuthenticated, isLoading } = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
-      render={(props) =>
-        !isAuthenticated && !isLoading ? <Redirect to="/login" /> : <Component {...props} />
-      }
+      render={!isAuthenticated && !isLoading ? <Redirect to="/login" /> : children}
     />
   );
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.node,
+  children: PropTypes.node,
+  path: PropTypes.string,
 };
 
 export default PrivateRoute;

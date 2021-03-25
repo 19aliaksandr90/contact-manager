@@ -1,23 +1,23 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import AuthContext from '../../context/auth/authContext';
 import AlertContext from '../../context/alert/alertContext';
 
-const Login = () => {
+const Login = (props) => {
   const { setAlert } = useContext(AlertContext);
   const { error, isAuthenticated, login, clearErrors } = useContext(AuthContext);
-  const history = useHistory();
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/');
+      props.history.push('/');
     }
     if (error === 'Invalid credentials') {
       setAlert(error, 'danger');
       clearErrors();
     }
-  }, [clearErrors, error, history, isAuthenticated, setAlert]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({ email: '', password: '' });
   const { email, password } = user;
@@ -45,7 +45,7 @@ const Login = () => {
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="text" name="password" value={password} onChange={onChange} required />
+          <input type="password" name="password" value={password} onChange={onChange} required />
         </div>
         <button type="submit" className="btn btn-primary btn-block">
           Login
@@ -53,6 +53,12 @@ const Login = () => {
       </form>
     </div>
   );
+};
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 export default Login;

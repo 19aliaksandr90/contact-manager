@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import AuthContext from './authContext';
 import authReducer from './authReducer';
+import setAuthToken from '../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -14,7 +15,6 @@ import {
   LOGIN_FAIL,
   LOGOUT,
 } from '../types';
-import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -27,7 +27,6 @@ const AuthState = ({ children }) => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Load user
   const loadUser = async () => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -42,7 +41,6 @@ const AuthState = ({ children }) => {
     }
   };
 
-  // Register user
   const register = async (formData) => {
     const config = {
       headers: {
@@ -59,7 +57,6 @@ const AuthState = ({ children }) => {
     }
   };
 
-  // Login user
   const login = async (formData) => {
     const config = {
       headers: {
@@ -76,10 +73,8 @@ const AuthState = ({ children }) => {
     }
   };
 
-  // Logout
   const logout = () => dispatch({ type: LOGOUT });
 
-  // Clear errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
