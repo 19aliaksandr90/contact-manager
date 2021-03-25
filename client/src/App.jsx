@@ -22,8 +22,8 @@ if (localStorage.token) {
 
 const App = () => (
   <AuthState>
-    <AlertState>
-      <ContactState>
+    <ContactState>
+      <AlertState>
         <Router>
           <Navbar title="Contact Keeper" icon="fas fa-id-card-alt" />
           <div className="container">
@@ -36,8 +36,8 @@ const App = () => (
             </Switch>
           </div>
         </Router>
-      </ContactState>
-    </AlertState>
+      </AlertState>
+    </ContactState>
   </AuthState>
 );
 

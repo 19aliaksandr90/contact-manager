@@ -40,8 +40,10 @@ img {
   width: 100%;
 }
 
-.padding-1rem {
-  padding: 0 1rem;
+.spinner {
+  width: 200px;
+  margin: auto;
+  display: block;
 }
 
 /* Utilities */
